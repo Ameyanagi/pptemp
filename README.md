@@ -48,3 +48,14 @@ By Default, the title of the slides are taken from the dir_path and img_path."_"
 If dir_path = "./fig/01_test/", then the title will be "test".
 If img_path = "01_test.png", then the label will be "test".
 ```
+
+## Samples
+
+```python
+# Basic sample
+python sample1.py
+
+# Samples using template-slides
+# You need to prepare template pptx files without any slides. If there is a slide, new slides will be appended.
+python sample2_using_template.py
+```
