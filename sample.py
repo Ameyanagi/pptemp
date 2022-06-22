@@ -13,6 +13,9 @@ if __name__ == '__main__':
     # Create slides from figures with label
     presentation.add_figure_label_slide()
     
+    # Create slides from figures with label
+    presentation.add_figure_slide()
+    
     # save
     presentation.save("./test.pptx")
     

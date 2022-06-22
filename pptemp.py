@@ -3,13 +3,12 @@ from pptx.util import Inches, Cm, Pt
 from pptx.enum.text import PP_ALIGN,MSO_ANCHOR
 from pptx.dml.color import RGBColor
 from pptx.enum.shapes import MSO_SHAPE
-import pandas as pd
 from pptx.oxml.xmlchemy import OxmlElement
+import pandas as pd
 import numpy as np
 from lxml import etree
 import re
 
-from datetime import date
 import glob
 from PIL import Image
 
@@ -399,6 +398,7 @@ class pptemp(object):
     def add_figure_label_slide(self, dir_path = "./fig/*/", img_path = "*.png", left=0, top=12, width=100, height=88, file_separator = re.compile(r"[^_\.]+"), dir_separator = re.compile(r"[^/_]+")):
         # Create slides from figures
         dir_list = glob.glob(dir_path)
+        dir_list.sort()
 
         for dir in dir_list:
             name = re.findall(dir_separator, dir)
@@ -418,6 +418,7 @@ class pptemp(object):
     def add_figure_slide(self, dir_path = "./fig/*/", img_path = "*.png", left=0, top=12, width=100, height=88, file_separator = re.compile(r"[^_\.]+"), dir_separator = re.compile(r"[^/_]+")):
         # Create slides from figures
         dir_list = glob.glob(dir_path)
+        dir_list.sort()
 
         for dir in dir_list:
             name = re.findall(dir_separator, dir)

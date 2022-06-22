@@ -1,0 +1,5 @@
+python-pptx
+pandas
+numpy
+lxml
+Pillow
