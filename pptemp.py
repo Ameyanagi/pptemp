@@ -36,9 +36,10 @@ class pptemp(object):
         self.prs = Presentation(path)
         self.blank = self.prs.slide_layouts[6]
         
-        # set the slides to 16*9
-        self.prs.slide_width = 11887200
-        self.prs.slide_height = 6686550
+        # Set slide size to 16*9 otherwise the path is specified
+        if path == None:
+            self.prs.slide_width = 12192000
+            self.prs.slide_height = 6858000
     
     #Slides    
         
@@ -56,7 +57,7 @@ class pptemp(object):
         return slide
     
     
-    def add_content_slide(self,title = "Title"):
+    def add_content_slide(self,title = "Title", use_bar = True):
         
         # Create New Slide
         slide = self.prs.slides.add_slide(self.blank)
@@ -66,7 +67,10 @@ class pptemp(object):
         slide, textbox = self.add_textbox(slide, title, 1, 2, 95, 5, align = "left", vertical = "top", 
                     font_name = "Meiryo", font_size = 30, font_bold = True, font_italic = False, font_underline = False, font_color = "black")
         
-        slide,_ = self.add_bar(slide)
+        if use_bar:
+            slide,_ = self.add_bar(slide)
+        else:
+            pass
         
         return slide
 
@@ -395,7 +399,8 @@ class pptemp(object):
                     
         return file_list, file_sep_list, dir_sep_list
 
-    def add_figure_label_slide(self, dir_path = "./fig/*/", img_path = "*.png", left=0, top=12, width=100, height=88, file_separator = re.compile(r"[^_\.]+"), dir_separator = re.compile(r"[^/_]+")):
+    def add_figure_label_slide(self, dir_path = "./fig/*/", img_path = "*.png", left=0, top=12, width=100, height=88, 
+                               file_separator = re.compile(r"[^_\.]+"), dir_separator = re.compile(r"[^/_]+"), use_bar = True):
         # Create slides from figures
         dir_list = glob.glob(dir_path)
         dir_list.sort()
@@ -403,7 +408,7 @@ class pptemp(object):
         for dir in dir_list:
             name = re.findall(dir_separator, dir)
             slide_title = name[-1]
-            slide  = self.add_content_slide(slide_title)
+            slide  = self.add_content_slide(slide_title, use_bar=use_bar)
                                         
             file_list, file_sep_list, dir_sep_list = self.get_img_list(dir+img_path)
             
@@ -415,7 +420,8 @@ class pptemp(object):
         
         return slide
         
-    def add_figure_slide(self, dir_path = "./fig/*/", img_path = "*.png", left=0, top=12, width=100, height=88, file_separator = re.compile(r"[^_\.]+"), dir_separator = re.compile(r"[^/_]+")):
+    def add_figure_slide(self, dir_path = "./fig/*/", img_path = "*.png", left=0, top=12, width=100, height=88, 
+                         file_separator = re.compile(r"[^_\.]+"), dir_separator = re.compile(r"[^/_]+"), use_bar=True):
         # Create slides from figures
         dir_list = glob.glob(dir_path)
         dir_list.sort()
@@ -423,7 +429,7 @@ class pptemp(object):
         for dir in dir_list:
             name = re.findall(dir_separator, dir)
             slide_title = name[-1]
-            slide  = self.add_content_slide(slide_title)
+            slide  = self.add_content_slide(slide_title, use_bar=use_bar)
                                         
             file_list = glob.glob(dir+img_path)
             file_list.sort()
