@@ -11,11 +11,13 @@ if __name__ == '__main__':
     slide = presentation.add_title_slide("Importing Figure", str(date.today()))
            
     # Create slides from figures with label
-    presentation.add_figure_label_slide()
+    # Set use_bar=False if you don't want the bars to appear
+    presentation.add_figure_label_slide(dir_path="./sample/fig/*/")
     
-    # Create slides from figures with label
-    presentation.add_figure_slide()
+    # Create slides from figures without label
+    # Set use_bar=False if you don't want the bars to appear
+    presentation.add_figure_slide(dir_path="./sample/fig/*/")
     
     # save
-    presentation.save("./test.pptx")
+    presentation.save("./sample_output/sample1.pptx")
     
