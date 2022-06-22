@@ -61,13 +61,12 @@ class pptemp(object):
         
         # Create New Slide
         slide = self.prs.slides.add_slide(self.blank)
-        self.add_bar(slide)
-        
+                
         # Add title textbox
         slide, textbox = self.add_textbox(slide, title, 1, 2, 95, 5, align = "left", vertical = "top", 
                     font_name = "Meiryo", font_size = 30, font_bold = True, font_italic = False, font_underline = False, font_color = "black")
         
-        if use_bar:
+        if use_bar == True:
             slide,_ = self.add_bar(slide)
         else:
             pass
