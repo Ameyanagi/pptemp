@@ -1,7 +1,5 @@
-from cProfile import label
 import pptemp
 from datetime import date
-import re
 
 if __name__ == '__main__':
     
