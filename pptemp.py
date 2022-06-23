@@ -43,28 +43,30 @@ class pptemp(object):
     
     #Slides    
         
-    def add_title_slide(self,title = "Title", subtitle = "Name"):
+    def add_title_slide(self,title = "Title", subtitle = "Name", align = "center", vertical = "middle", 
+                        font_name = "Meiryo", font_size_title = 44, font_size_subtitle = 18, font_bold = True, font_italic = False, font_underline = False, font_color = "black"):
         slide = self.prs.slides.add_slide(self.blank)
         
         # Add title textbox
-        slide, textbox = self.add_textbox(slide, title, 10, 25, 80, 30, align = "center", vertical = "middle", 
-                    font_name = "Meiryo", font_size = 44, font_bold = True, font_italic = False, font_underline = False, font_color = "black")
+        slide, textbox = self.add_textbox(slide, title, 10, 25, 80, 30, align = align, vertical = vertical, 
+                    font_name = font_name, font_size = font_size_title, font_bold = font_bold, font_italic = font_italic, font_underline = font_underline, font_color = font_color)
                 
         # Add subtitle textbox
-        slide, textbox = self.add_textbox(slide, subtitle, 20, 60, 60, 20, align = "center", vertical = "middle", 
-                    font_name = "Meiryo", font_size = 18, font_bold = True, font_italic = False, font_underline = False, font_color = "black")
+        slide, textbox = self.add_textbox(slide, subtitle, 20, 60, 60, 20, align = align, vertical = vertical, 
+                    font_name = font_name, font_size = font_size_subtitle, font_bold = font_bold, font_italic = font_italic, font_underline = font_underline, font_color = font_color)
                 
         return slide
     
     
-    def add_content_slide(self,title = "Title", use_bar = True):
+    def add_content_slide(self,title = "Title", use_bar = True, align = "left", vertical = "top", 
+                    font_name = "Meiryo", font_size = 30, font_bold = True, font_italic = False, font_underline = False, font_color = "black"):
         
         # Create New Slide
         slide = self.prs.slides.add_slide(self.blank)
                 
         # Add title textbox
-        slide, textbox = self.add_textbox(slide, title, 1, 2, 95, 5, align = "left", vertical = "top", 
-                    font_name = "Meiryo", font_size = 30, font_bold = True, font_italic = False, font_underline = False, font_color = "black")
+        slide, textbox = self.add_textbox(slide, title, 1, 2, 95, 5, align = align, vertical = vertical, 
+                    font_name = font_name, font_size = font_size, font_bold = font_bold, font_italic = font_italic, font_underline = font_underline, font_color = font_color)
         
         if use_bar == True:
             slide,_ = self.add_bar(slide)
@@ -122,15 +124,18 @@ class pptemp(object):
                           font_italic = False, font_underline = True, font_color = "black"):
         
         if label_position == "top":
-            picture = slide.shapes.add_picture(*self.calc_center_img(path, left, top+label_height, width, height-label_height))
-            textbox = self.add_textbox(slide, label, left, top, width, label_height, align = align, vertical = vertical, font_name = font_name, 
-                                       font_size = font_size, font_bold = font_bold, font_italic = font_italic, 
-                                       font_underline = font_underline, font_color = font_color)
+            picture_top = top+label_height
+            picture_height = height-label_height
+            label_top = top
         else:
-            picture = slide.shapes.add_picture(*self.calc_center_img(path, left, top, width, height-label_height))
-            textbox = self.add_textbox(slide, label, left, top+height-label_height, width, label_height, align = align, vertical = vertical, font_name = font_name, 
-                                       font_size = font_size, font_bold = font_bold, font_italic = font_italic, 
-                                       font_underline = font_underline, font_color = font_color)
+            picture_top = top
+            picture_height = height-label_height
+            label_top = top+picture_height
+            
+        picture = slide.shapes.add_picture(*self.calc_center_img(path, left, picture_top, width, picture_height))
+        textbox = self.add_textbox(slide, label, left, label_top, width, label_height, align = align, vertical = vertical, font_name = font_name, 
+                                    font_size = font_size, font_bold = font_bold, font_italic = font_italic, 
+                                    font_underline = font_underline, font_color = font_color)
             
         
         return slide, picture, textbox
@@ -364,7 +369,7 @@ class pptemp(object):
             raise Exception('Unknown length units: {}'.format(units))
         
     def calc_align_img(self, path_list, left, top, width, height):
-            
+                
         columns = int(np.sqrt(len(path_list)))
         rows = np.ceil(len(path_list)/columns)
         
@@ -374,6 +379,7 @@ class pptemp(object):
         results = []
                 
         for i in range(len(path_list)):
+
             row = i%rows
             column = i//rows
             
@@ -386,74 +392,47 @@ class pptemp(object):
             
         return results
     
-    def get_img_list(self, path, file_separator = re.compile(r"[^_\.]+")):
+    def get_img_list(self, path, file_regex = re.compile(r".*[_/](.*)\.[a-zA-Z]+")):
         file_list = glob.glob(path)
         file_sep_list = []
-        dir_sep_list = []
         file_list.sort()
         
         for file in file_list:
-            dir_sep_list.append(file.split("/"))
-            file_sep_list.append(re.findall(file_separator, dir_sep_list[-1][-1]))
+            file_sep_list.append(re.findall(file_regex, file)[0])
                     
-        return file_list, file_sep_list, dir_sep_list
+        return file_list, file_sep_list
 
     def add_figure_label_slide(self, dir_path = "./fig/*/", img_path = "*.png", left=0, top=12, width=100, height=88, 
-                               file_separator = re.compile(r"[^_\.]+"), dir_separator = re.compile(r"[^/_]+"), use_bar = True):
+                               file_regex = re.compile(r".*[_/](.*)\.[a-zA-Z]+"), dir_regex = re.compile(r".*[/_](.*)/"), use_label = True, use_bar = True, label_position = "top"):
         # Create slides from figures
         dir_list = glob.glob(dir_path)
         dir_list.sort()
 
         for dir in dir_list:
-            name = re.findall(dir_separator, dir)
-            slide_title = name[-1]
+            file_list, file_sep_list = self.get_img_list(dir+img_path, file_regex=file_regex)
+            
+            if len(file_list) == 0:
+                return
+            
+            name = re.findall(dir_regex, dir)
+            slide_title = name[0]
             slide  = self.add_content_slide(slide_title, use_bar=use_bar)
-                                        
-            file_list, file_sep_list, dir_sep_list = self.get_img_list(dir+img_path)
-            
-                    
-            img_list = self.calc_align_img(file_list, left, top, width, height)
-            
-            for i in range(len(file_list)):
-                self.add_picture_label(slide, *img_list[i], file_sep_list[i][-2], align="center")
-        
-        return slide
-        
-    def add_figure_slide(self, dir_path = "./fig/*/", img_path = "*.png", left=0, top=12, width=100, height=88, 
-                         file_separator = re.compile(r"[^_\.]+"), dir_separator = re.compile(r"[^/_]+"), use_bar=True):
-        # Create slides from figures
-        dir_list = glob.glob(dir_path)
-        dir_list.sort()
 
-        for dir in dir_list:
-            name = re.findall(dir_separator, dir)
-            slide_title = name[-1]
-            slide  = self.add_content_slide(slide_title, use_bar=use_bar)
-                                        
-            file_list = glob.glob(dir+img_path)
-            file_list.sort()
-                    
             img_list = self.calc_align_img(file_list, left, top, width, height)
             
             for i in range(len(file_list)):
-                self.add_picture(slide, *img_list[i])
+                if use_label == True:
+                    self.add_picture_label(slide, *img_list[i], file_sep_list[i], align="center", label_position=label_position)
+                else:
+                    self.add_picture(slide, *img_list[i])
         
         return slide
-    
+        
     # Template
 
 
     def save(self, path="test.pptx"):
         self.prs.save(path)
-    
-def main():
-    test = pptemp()
-    slide = test.add_title_slide("Title", "Subtitle")
-    slide = test.add_content_slide("Test slide")
-    test.save()
-    
-if __name__ == '__main__':
-    main()
     
     
         
