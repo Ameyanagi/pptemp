@@ -23,9 +23,6 @@ presentation.add_title_slide("Title", "Subtitle")
 # Create Blank Slide with title on the top
 presentation.add_title_slide("Title of the slide")
 
-# Create slides from figures with label
-presentation.add_figure_label_slide()
-
 # Create slides from figures
 presentation.add_figure_slide()
 
