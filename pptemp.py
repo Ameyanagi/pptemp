@@ -404,7 +404,7 @@ class pptemp(object):
         return file_list, file_sep_list
 
     def add_figure_label_slide(self, dir_path = "./fig/*/", img_path = "*.png", left=0, top=12, width=100, height=88, 
-                               file_regex = re.compile(r".*[_/](.*)\.[a-zA-Z]+"), dir_regex = re.compile(r".*[/_](.*)/"), use_label = True, use_bar = True, label_position = "top", title_font_size = 30):
+                               file_regex = re.compile(r".*[_/](.*)\.[a-zA-Z]+"), dir_regex = re.compile(r".*[/_](.*)/"), use_label = True, use_bar = True, label_position = "top", title_font_size = 30, label_font_size=18):
         # Create slides from figures
         dir_list = glob.glob(dir_path)
         dir_list.sort()
@@ -423,7 +423,7 @@ class pptemp(object):
             
             for i in range(len(file_list)):
                 if use_label == True:
-                    self.add_picture_label(slide, *img_list[i], file_sep_list[i], align="center", label_position=label_position)
+                    self.add_picture_label(slide, *img_list[i], file_sep_list[i], align="center", label_position=label_position, font_size=label_font_size)
                 else:
                     self.add_picture(slide, *img_list[i])
         
