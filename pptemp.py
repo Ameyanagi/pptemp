@@ -11,6 +11,7 @@ import re
 
 import glob
 from PIL import Image
+import tqdm
 
 class pptemp(object):
     
@@ -420,7 +421,7 @@ class pptemp(object):
 
             img_list = self.calc_align_img(file_list, left, top, width, height)
             
-            for i in range(len(file_list)):
+            for i in tqdm(range(len(file_list))):
                 if use_label == True:
                     self.add_picture_label(slide, *img_list[i], file_sep_list[i], align="center", label_position=label_position)
                 else:
