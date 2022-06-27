@@ -409,7 +409,7 @@ class pptemp(object):
         dir_list = glob.glob(dir_path)
         dir_list.sort()
 
-        for dir in dir_list:
+        for dir in tqdm.tqdm(dir_list):
             file_list, file_sep_list = self.get_img_list(dir+img_path, file_regex=file_regex)
             
             if len(file_list) == 0:
@@ -421,7 +421,7 @@ class pptemp(object):
 
             img_list = self.calc_align_img(file_list, left, top, width, height)
             
-            for i in tqdm(range(len(file_list))):
+            for i in range(len(file_list)):
                 if use_label == True:
                     self.add_picture_label(slide, *img_list[i], file_sep_list[i], align="center", label_position=label_position)
                 else:
