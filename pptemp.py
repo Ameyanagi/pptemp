@@ -13,7 +13,7 @@ import glob
 from PIL import Image
 
 class pptemp(object):
-    
+        
     align_dict = {"left": PP_ALIGN.LEFT, "center": PP_ALIGN.CENTER, "right": PP_ALIGN.RIGHT}
     vertical_dict = {"top": MSO_ANCHOR.TOP, "middle": MSO_ANCHOR.MIDDLE, "bottom": MSO_ANCHOR.BOTTOM}
     # color_dict = {"black": RGBColor(0x00, 0x00, 0x00),
