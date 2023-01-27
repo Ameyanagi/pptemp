@@ -4,18 +4,19 @@ PPTemp is a wrapper for
 [python-pptx](https://python-pptx.readthedocs.io/en/latest/index.html).
 It enables you to make powerpoint files in a simple python commands.
 
-## Installing Dependencies
 
-```
-pip install -r requirement.txt
+## Installation
+
+```bash
+pip install git+https://github.com/Ameyanagi/pptemp
 ```
 
 ## Usage
 ```python
-import pptemp
+from pptemp import pptemp
 
 # Initialization
-presentation = pptemp.pptemp()
+presentation = pptemp()
     
 # Title
 presentation.add_title_slide("Title", "Subtitle")

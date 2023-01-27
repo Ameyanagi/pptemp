@@ -1,10 +1,10 @@
-import pptemp
+from pptemp import pptemp
 from datetime import date
 
 if __name__ == '__main__':
     
     # initialization
-    presentation = pptemp.pptemp("./sample/sample_template.pptx")
+    presentation = pptemp("./sample/sample_template.pptx")
         
     # Slide 1 Title
     slide = presentation.add_title_slide("Importing Figure", str(date.today()))
@@ -13,7 +13,7 @@ if __name__ == '__main__':
     # Set use_bar=False if you don't want the bars to appear
     presentation.add_figure_label_slide(dir_path="./sample/fig/*/", use_bar=False)
     
-    presentation.add_figure_slide(dir_path="./sample/fig/*/", use_bar=False)
+    presentation.add_figure_label_slide(dir_path="./sample/fig/*/", use_label=False)
         
     # save
     presentation.save("./sample_output/sample2_using_template.pptx")

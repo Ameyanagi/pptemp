@@ -1,10 +1,10 @@
-import pptemp
+from pptemp import pptemp
 from datetime import date
 
 if __name__ == '__main__':
     
     # initialization
-    presentation = pptemp.pptemp()
+    presentation = pptemp()
         
     # Slide 1 Title
     slide = presentation.add_title_slide("Importing Figure", str(date.today()))
