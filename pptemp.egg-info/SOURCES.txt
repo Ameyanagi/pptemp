@@ -1,0 +1,12 @@
+LICENSE.md
+README.md
+setup.cfg
+setup.py
+pptemp/__init__.py
+pptemp/pptemp.py
+pptemp.egg-info/PKG-INFO
+pptemp.egg-info/SOURCES.txt
+pptemp.egg-info/dependency_links.txt
+pptemp.egg-info/not-zip-safe
+pptemp.egg-info/requires.txt
+pptemp.egg-info/top_level.txt

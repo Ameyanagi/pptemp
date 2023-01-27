@@ -1,0 +1,25 @@
+__pycache__
+
+working.ipynb
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+.installed.cfg
+MANIFEST
+
+# sample output
+example/sample_output
+
+# debuging purpose
+working.ipynb
