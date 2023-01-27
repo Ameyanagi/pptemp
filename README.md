@@ -8,7 +8,7 @@ It enables you to make powerpoint files in a simple python commands.
 ## Installation
 
 ```bash
-pip install git+https://github.com/Ameyanagi/pptemp
+pip install pptemp
 ```
 
 ## Usage
