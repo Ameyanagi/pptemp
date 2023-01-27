@@ -13,8 +13,6 @@ if __name__ == '__main__':
     # Set use_bar=False if you don't want the bars to appear
     presentation.add_figure_label_slide(dir_path="./sample/fig/*/", use_bar=False)
     
-    # Create slides from figures without label
-    # Set use_bar=False if you don't want the bars to appear
     presentation.add_figure_slide(dir_path="./sample/fig/*/", use_bar=False)
         
     # save
